@@ -1,0 +1,13 @@
+= form_for @mac do |f|
+  - if @mac.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@mac.errors.count, "error")} prohibited this mac from being saved:"
+      %ul
+        - @mac.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :address
+    = f.text_area :address
+  .actions
+    = f.submit 'Save'

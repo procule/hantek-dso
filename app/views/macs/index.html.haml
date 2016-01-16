@@ -1,0 +1,21 @@
+%h1 Listing macs
+
+%table
+  %thead
+    %tr
+      %th Address
+      %th
+      %th
+      %th
+
+  %tbody
+    - @macs.each do |mac|
+      %tr
+        %td= mac.address
+        %td= link_to 'Show', mac
+        %td= link_to 'Edit', edit_mac_path(mac)
+        %td= link_to 'Destroy', mac, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Mac', new_mac_path

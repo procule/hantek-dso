@@ -1,0 +1,3 @@
+         Prefix Verb URI Pattern                Controller#Action
+device_settings GET  /device/settings(.:format) device#settings
+            mac GET  /mac(.:format)             device#set_mac

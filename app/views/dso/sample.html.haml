@@ -1,0 +1,17 @@
+%b
+  - if @device
+    = ap @packet
+    - if @packet['in_data']
+      %p
+        Received:
+        - @packet['in_data'].unpack('H*')[0].scan(/../).each {|n| concat '0x'+n+' ' }
+
+
+
+
+  - else
+    No DSO detected. Is it plugged in USB ?
+%p
+- if @handle.kernel_driver_active? 0
+  Another kernel driver loaded
+- @handle.release_interface 0

@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Address:
+  = @mac.address
+
+= link_to 'Edit', edit_mac_path(@mac)
+\|
+= link_to 'Back', macs_path
