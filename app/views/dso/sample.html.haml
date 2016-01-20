@@ -4,7 +4,21 @@
     - if @packet['in_data']
       %p
         Received:
-        - @packet['in_data'].unpack('H*')[0].scan(/../).each {|n| concat '0x'+n+' ' }
+        %pe
+          - @packet['in_data'].unpack('H*')[0].scan(/../).each {|n| concat '0x'+n+' ' }
+          %p
+            - begin
+              - o = ReadSampleDataLength.read(@packet['in_data'])
+              Command received:
+              = o.get_command
+              = ap o.inspect false
+              - rescue EOFError => e
+              EOF
+          %p
+            - p = @handle.bulk_transfer(:endpoint => 0x81, :dataIn => 65536, :timeout => 4000)
+            - p.unpack('H*')[0].scan(/../).each {|n| concat n }
+            = ap p.inspect
+            EOF
 
 
 

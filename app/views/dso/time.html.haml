@@ -4,11 +4,15 @@
     - if @packet['in_data']
       %p
         Received:
-        - @packet['in_data'].unpack('H*')[0].scan(/../).each {|n| concat '0x'+n+' ' }
+        - @packet['in_data'].unpack('H*')[0].scan(/../).each {|n| concat '\x'+n }
       %p
-        Means:
-        - s = SystemTime.new @packet['in_data']
-        = ap s.datetime
+        - begin
+          - o = SystemTime.read(@packet['in_data'])
+          Command received:
+          = o.get_command
+          = ap o.inspect false
+          - rescue EOFError => e
+          EOF
 
 
 

@@ -21,7 +21,9 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
+#gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sdoc'
+gem 'yard'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -49,4 +51,6 @@ gem 'packetfu'
 gem 'haml-rails'
 gem 'awesome_print'
 gem 'libusb'
-gem 'bindata'
+gem 'bindata', :git => 'https://github.com/dmendel/bindata.git'
+gem 'pry-rails'
+gem 'colorize'

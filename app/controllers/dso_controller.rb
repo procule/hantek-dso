@@ -62,8 +62,33 @@ class DsoController < ApplicationController
     if @packet['out_sent'] == @packet['out_len']
       @packet['in_data'] = @handle.bulk_transfer(:endpoint => 0x81, :dataIn => 65536)
     end
+  end
 
+  def buzz
+    usb = LIBUSB::Context.new
+    @device = usb.devices(:idVendor => 0x049f, :idProduct => 0x505a).first
+    @handle = @device.open
+    if @handle.kernel_driver_active? 0
+      @handle.detach_kernel_driver 0
+    end
 
+    begin
+      @handle.claim_interface 0
+    rescue LIBUSB::ERROR_BUSY
+      @handle.reset_device
+      @handle.detach_kernel_driver 0
+      @handle.attach_kernel_driver 0
+    end
+
+    @packet = {}
+    @packet['out'] = [0x43, 0x02, 0x00, 0x02]
+    @packet['out'] << @packet['out'].inject(:+)
+
+    @packet['out_len'] = @packet['out'].length
+    @packet['out_sent'] = @handle.bulk_transfer(:endpoint => 0x2, :dataOut => @packet['out'].pack('c*'))
+    if @packet['out_sent'] == @packet['out_len']
+      @packet['in_data'] = @handle.bulk_transfer(:endpoint => 0x81, :dataIn => 65536)
+    end
   end
 end
 
