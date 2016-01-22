@@ -47,6 +47,9 @@ group :development do
   gem 'spring'
 end
 
+# Use sudo
+gem 'sudo'
+
 gem 'packetfu'
 gem 'haml-rails'
 gem 'awesome_print'
