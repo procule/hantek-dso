@@ -22,7 +22,7 @@ module Hantek
       end
     end
 
-    def get_packet
+    def read_packet
       begin
         p = @handle.bulk_transfer :endpoint => @endpoints[:in][:addr], :dataIn => @endpoints[:in][:maxsize],
                               :timeout => @timeout
@@ -47,12 +47,13 @@ module Hantek
       len = r.send(self)
       if len == r.packet.length
         begin
-          p = get_packet
+          p = read_packet
           raise Hantek::IOError if p.nil?
-        rescue Hantek::IOError
+          raise Hantek::LockError if p.class == Hantek::LockResponse
+        rescue Hantek::IOError, Hantek::LockError
           retry
         end
-
+        p
       else
         false
       end
