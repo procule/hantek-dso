@@ -7,6 +7,10 @@ class DsoController < ApplicationController
     @packet.to_w('usb0')
   end
 
+  def client
+    @client = Hantek::Client.new
+  end
+
   def time
     usb = LIBUSB::Context.new
     @device = usb.devices(:idVendor => 0x049f, :idProduct => 0x505a).first
