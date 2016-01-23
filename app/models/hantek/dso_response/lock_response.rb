@@ -6,6 +6,7 @@ module Hantek
     uint8     :command
     uint8     :subcommand
     uint8     :lock
+    uint8     :cs
 
     def read(io={})
       super(io)

@@ -16,7 +16,7 @@
 !/log/.keep
 /tmp
 /.idea
-.yardoc
+/.yardoc
 .byebug_history
 test
 /doc
