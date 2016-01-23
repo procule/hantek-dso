@@ -20,7 +20,7 @@ If not, add your user to the group:
 > $ sudo usermod -a -G plugdev $USER
 
 Add an udev rule to give read-write access to Hantek oscilloscope USB device for group *plugdev*:
-> $ cat << EOF > /tmp/lucsenay  
+> $ cat << EOF > /etc/udev/rules.d/46-Hantek.rules  
 SUBSYSTEMS=="usb", ATTRS{idVendor}=="049f", ATTRS{idProduct}=="505a", SYMLINK+="hantek", GROUP=="plugdev   
 EOF
 
