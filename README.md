@@ -14,20 +14,20 @@ On Debian-based system, a group called *plugdev* is present and is used to give 
  
 Check to see if you are in the *plugdev* group:
 > $ groups
-< **groups listed** > 
+> < **groups listed** > 
 
 If not, add your user to the group:
 > $ sudo usermod -a -G plugdev $USER
 
 Add an udev rule to give read-write access to Hantek oscilloscope USB device for group *plugdev*:
 > $ cat << EOF > /tmp/lucsenay
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="049f", ATTRS{idProduct}=="505a", SYMLINK+="hantek", GROUP=="plugdev
-EOF
+> SUBSYSTEMS=="usb", ATTRS{idVendor}=="049f", ATTRS{idProduct}=="505a", SYMLINK+="hantek", GROUP=="plugdev
+> EOF
 
 Reload *udev* daemon:
 > $ sudo service udev reload
 
 Now, plug the USB cable of the scope and a new device should be visible in */dev* with the *plugdev* group owner:
 > $ ls -lL /dev/hantek
-crw-rw-r-- 1 root plugdev 189, 699 Jan 1 00:00 /dev/hantek
+> crw-rw-r-- 1 root plugdev 189, 699 Jan 1 00:00 /dev/hantek
 
