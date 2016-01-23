@@ -19,4 +19,5 @@
 .yardoc
 .byebug_history
 test
-
+/doc
+.rbenv-gemsets

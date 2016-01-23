@@ -1,5 +1,5 @@
 module Hantek
-  class SystemTime < DSOPacket
+  class SystemTimeResponse < DSOResponse
     endian    :little
     uint8     :start
     uint16    :len

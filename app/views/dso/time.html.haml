@@ -7,7 +7,7 @@
         - @packet['in_data'].unpack('H*')[0].scan(/../).each {|n| concat '\x'+n }
       %p
         - begin
-          - o = SystemTime.read(@packet['in_data'])
+          - o = SystemTimeResponse.read(@packet['in_data'])
           Command received:
           = o.get_command
           = ap o.inspect false

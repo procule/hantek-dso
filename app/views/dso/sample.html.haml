@@ -8,7 +8,7 @@
           - @packet['in_data'].unpack('H*')[0].scan(/../).each {|n| concat '0x'+n+' ' }
           %p
             - begin
-              - o = ReadSampleDataLength.read(@packet['in_data'])
+              - o = ReadSampleDataLengthResponse.read(@packet['in_data'])
               Command received:
               = o.get_command
               = ap o.inspect false
