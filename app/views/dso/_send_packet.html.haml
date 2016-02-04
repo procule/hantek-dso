@@ -1,0 +1,16 @@
+- requests = Hantek::REQUESTS
+= form_tag do
+  %p
+    = label_tag 'packet_type', 'Send packet:'
+    = select_tag 'packet_type', options_for_select(requests, params[:packet_type])
+    = submit_tag 'Send'
+
+= form_tag do
+  %p
+    = hidden_field_tag 'read_packet'
+    = submit_tag 'Read packet'
+
+= form_tag do
+  %p
+    = hidden_field_tag 'clear_queue'
+    = submit_tag 'Clear queue'

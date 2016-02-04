@@ -1,1 +1,35 @@
-= ap @client
+- vfinish = 0
+- if Hantek::DSOResponse.in? @datastr.class.ancestors
+  %p
+    %h2 PACKET !
+    %p.grey
+      = @datastr.class.ancestors[0].to_s
+  %p.packet
+    = @datastr.to_hex
+
+  %p.grey
+    = @datastr.result
+- else
+  %p
+    %h2 NO PACKET RECOGNIZED!
+    %p.grey
+      = @datastr.class.ancestors[0].to_s
+  %p.packet
+    - if @datastr
+      - str = ''
+      - ary = @datastr.unpack('C*')
+      - ary.each do |n|
+        - str += (('%02x' % n.to_i.to_s(16).upcase.to_i(16))+' ')
+      = str
+    - else
+      No packet in queue
+
+- vfinish = Time.now
+%br
+%p
+  = render :partial => 'send_packet'
+
+%p ----
+
+%p
+  Rendered: #{vfinish-@vstart} sec.

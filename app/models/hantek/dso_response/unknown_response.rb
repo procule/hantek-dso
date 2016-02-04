@@ -6,7 +6,7 @@ module Hantek
     uint8     :command
     rest      :rest
 
-    def read(io={})
+    def read(io={},client=nil)
       super(io)
     end
   end

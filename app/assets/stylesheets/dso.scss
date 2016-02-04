@@ -1,3 +1,24 @@
 // Place all the styles related to the dso controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+p.packet {
+  margin: auto;
+  align-self: center;
+  padding: 20px;
+  width: 80%;
+  background-color: #444444;
+  color: #c5c5c5;
+  font-family: "Source Code Pro", Monaco, monospace;
+  word-wrap: break-word;
+}
+
+p.grey {
+  margin: 20px;
+  align-self: center;
+  padding: 20px;
+  background-color: #c5c5c5;
+  color: #B00100;
+  font-family: "Source Code Pro", Monaco, monospace;
+  word-wrap: break-word;
+}

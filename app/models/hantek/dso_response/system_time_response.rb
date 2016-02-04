@@ -14,17 +14,22 @@ module Hantek
 
     attr_reader :datetime
 
-    def read(io={})
+    def read(io={},client=nil)
       super(io)
       @datetime = DateTime.new(year,month,day,hour,minute,second)
       add_param :datetime
-      @cs_ok = (get_cs == hex(cs))
-      add_param :cs_ok
+      #@cs_ok = (get_cs == hex(cs))
+     # add_param :cs_ok
+      self
     end
 
     def inspect (colorize=true)
       hexed = [:start, :command]
       super colorize, hexed
+    end
+
+    def result
+      @datetime
     end
   end
 end

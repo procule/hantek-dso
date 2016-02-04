@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   get 'sample' => 'dso#sample'
   get 'buzz' => 'dso#buzz'
   get 'client' => 'dso#client'
+  post 'client' => 'dso#client'
 end

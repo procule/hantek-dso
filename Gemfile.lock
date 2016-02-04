@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/dmendel/bindata.git
-  revision: 5ce756c2991c38c3a3d587f8fb6987107ae3c234
+  revision: 443bc807d1c98eecac77aa03ef62dbff02441d23
   specs:
     bindata (2.1.0)
 
@@ -95,21 +95,22 @@ GEM
     method_source (0.8.2)
     mime-types (2.99)
     mini_portile2 (2.0.0)
-    minitest (5.8.3)
+    minitest (5.8.4)
     multi_json (1.11.2)
     network_interface (0.0.1)
-    nokogiri (1.6.7.1)
+    nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     packetfu (1.1.11)
       network_interface (~> 0.0)
       pcaprub (~> 0.12)
-    pcaprub (0.12.0)
+    pcaprub (0.12.1)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    puma (2.15.3)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -139,8 +140,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.5.0)
     rdoc (4.2.1)
-      json (~> 1.4)
-    ruby_parser (3.7.2)
+    ruby_parser (3.7.3)
       sexp_processor (~> 4.1)
     sass (3.4.21)
     sass-rails (5.0.4)
@@ -152,7 +152,7 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    sexp_processor (4.6.0)
+    sexp_processor (4.6.1)
     slop (3.6.0)
     spring (1.6.2)
     sprockets (3.5.2)
@@ -196,6 +196,7 @@ DEPENDENCIES
   libusb
   packetfu
   pry-rails
+  puma
   rails (= 4.2.5)
   sass-rails (~> 5.0)
   sdoc

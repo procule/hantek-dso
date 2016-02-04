@@ -12,13 +12,18 @@ module Hantek
       else
         @handle.detach_kernel_driver 0
       end
+      begin
+        @handle.claim_interface 0
+      rescue LIBUSB::ERROR_BUSY
+        self.reset
+        retry
+      end
 
-      @handle.claim_interface 0
       @timeout = timeout
       @endpoints = Hash.new
       device.endpoints.each do |e|
         @endpoints[e.direction] = { :addr => e.bEndpointAddress }
-        @endpoints[e.direction][:maxsize] = device.max_packet_size e
+        @endpoints[e.direction][:maxsize] = 512
       end
     end
 
@@ -26,7 +31,8 @@ module Hantek
       begin
         p = @handle.bulk_transfer :endpoint => @endpoints[:in][:addr], :dataIn => @endpoints[:in][:maxsize],
                               :timeout => @timeout
-        DSOResponse.build p
+
+        DSOResponse.build({:data => p, :client => self})
 
       rescue LIBUSB::ERROR_TIMEOUT
         return false
@@ -59,8 +65,13 @@ module Hantek
       end
     end
 
-    def close
-      @handle.release_interface 0
+    def each_pair
+      {:client => self}
+    end
+
+    def reset
+      @handle.reset_device
+      @handle.detach_kernel_driver 0
     end
   end
 end
