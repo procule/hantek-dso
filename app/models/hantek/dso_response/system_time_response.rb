@@ -18,8 +18,8 @@ module Hantek
       super(io)
       @datetime = DateTime.new(year,month,day,hour,minute,second)
       add_param :datetime
-      #@cs_ok = (get_cs == hex(cs))
-     # add_param :cs_ok
+      @cs_ok = (get_cs == hex(cs))
+      add_param :cs_ok
       self
     end
 

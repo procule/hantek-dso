@@ -1,21 +1,42 @@
 - vfinish = 0
-- if Hantek::DSOResponse.in? @datastr.class.ancestors
+- if @datastr.class.ancestors.inject(false) {|result, c| result || (Hantek::DSOResponse.to_s == c.to_s) }
   %p
     %h2 PACKET !
-    %p.grey
+  %div
+    %p.etiquette
+      Object class
+    %p.packet
       = @datastr.class.ancestors[0].to_s
-  %p.packet
-    = @datastr.to_hex
+  %div
+    %p.etiquette
+      Hex string
+    %p.packet
+      = @datastr.to_hex
+  %div
+    %p.etiquette
+      Packet inspect
+    = safe_html(ap @datastr.inspect)
+  %div
+    %p.etiquette
+      Graphic
+    %div#chart_div
+      %script
+        loadCharts(#{@datastr.result});
+  %div
+    %p.etiquette
+      Result
+    %p.packet
+      = @datastr.result
 
-  %p.grey
-    = @datastr.result
 - else
   %p
     %h2 NO PACKET RECOGNIZED!
     %p.grey
       = @datastr.class.ancestors[0].to_s
   %p.packet
-    - if @datastr
+    - if @datastr.class.ancestors[0] == String
+      = @datastr
+    - elsif @datastr
       - str = ''
       - ary = @datastr.unpack('C*')
       - ary.each do |n|
@@ -26,6 +47,7 @@
 
 - vfinish = Time.now
 %br
+
 %p
   = render :partial => 'send_packet'
 

@@ -20,7 +20,17 @@ module Hantek
         if Hantek::HAVE_SUBCMD.include? c
           sc = ('sc_'+data.unpack('H*').first.scan(/../)[3]+'_'+data.unpack('H*').first.scan(/../)[4]).to_sym
           puts "SUBCOMMAND: #{sc}"
-          Hantek::SUBCOMMAND[sc].new.pre_read(data, client)
+
+          if sc == :sc_82_00
+            Hantek::SUBCOMMAND[sc].new.pre_read(data, client)
+            d = ""
+            while 1
+              nd = client.get_data
+              d += nd unless nd.nil?
+              break if nd.size < client.endpoints[:in][:maxsize]
+            end
+            Hantek::SampleDataPacketResponse.new.pre_read(d, client)
+          end
         else
           if Hantek::COMMAND[c].method_defined? :pre_read
             puts 'WE HAVE PRE-READ'
@@ -62,9 +72,8 @@ module Hantek
         else
           i[a] = (a.in?(hexed) ? hex(self[a]) : self[a])
         end
-
       end
-      ap i
+      i
     end
 
     def add_param s

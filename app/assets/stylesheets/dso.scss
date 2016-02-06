@@ -2,15 +2,33 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-p.packet {
-  margin: auto;
+p.packet, pre.packet, pre.debug_dump, div#chart_div {
   align-self: center;
+  background-color: #030304;
+  border-color: yellowgreen;
+  border-style: double;
+  color: #e8e8e8;
+  font-family: "Source Code Pro",Monaco,monospace;
+  font-weight: bold;
+  margin: auto;
   padding: 20px;
-  width: 80%;
-  background-color: #444444;
-  color: #c5c5c5;
-  font-family: "Source Code Pro", Monaco, monospace;
+  width: 83%;
   word-wrap: break-word;
+}
+
+p.etiquette {
+  background-color: black;
+  border-bottom-width: 0;
+  border-style: solid;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  color: yellowgreen;
+  font-weight: bold;
+  margin-bottom: 0;
+  margin-left: 8%;
+  padding: 7px;
+  text-align: center;
+  width: 9%;
 }
 
 p.grey {
@@ -21,4 +39,13 @@ p.grey {
   color: #B00100;
   font-family: "Source Code Pro", Monaco, monospace;
   word-wrap: break-word;
+}
+
+body.body {
+  background-color: navy;
+  color: #a6a6a6;
+}
+
+div#chart_div {
+  height: 450px;
 }

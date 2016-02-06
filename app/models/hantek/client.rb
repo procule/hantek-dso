@@ -23,7 +23,7 @@ module Hantek
       @endpoints = Hash.new
       device.endpoints.each do |e|
         @endpoints[e.direction] = { :addr => e.bEndpointAddress }
-        @endpoints[e.direction][:maxsize] = 512
+        @endpoints[e.direction][:maxsize] = e.wMaxPacketSize
       end
     end
 
@@ -44,7 +44,7 @@ module Hantek
         @handle.bulk_transfer :endpoint => @endpoints[:in][:addr], :dataIn => @endpoints[:in][:maxsize],
                                   :timeout => @timeout
       rescue LIBUSB::ERROR_TIMEOUT
-        return false
+        return 'ERROR TIMEOUT'
       end
     end
 

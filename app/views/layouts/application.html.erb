@@ -4,9 +4,13 @@
   <title>DSO</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart', 'line']}]}"></script>
+  <script type="text/javascript" src="/assets/dso.js"></script>
+
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="body">
 
 <%= yield %>
 
