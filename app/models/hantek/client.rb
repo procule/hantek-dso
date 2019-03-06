@@ -27,9 +27,9 @@ module Hantek
       end
     end
 
-    def read_packet
+    def read_packet(buf=@endpoints[:in][:maxsize])
       begin
-        p = @handle.bulk_transfer :endpoint => @endpoints[:in][:addr], :dataIn => @endpoints[:in][:maxsize],
+        p = @handle.bulk_transfer :endpoint => @endpoints[:in][:addr], :dataIn => buf,
                               :timeout => @timeout
 
         DSOResponse.build({:data => p, :client => self})
@@ -39,9 +39,9 @@ module Hantek
       end
     end
 
-    def get_data
+    def get_data(buf=@endpoints[:in][:maxsize])
       begin
-        @handle.bulk_transfer :endpoint => @endpoints[:in][:addr], :dataIn => @endpoints[:in][:maxsize],
+        @handle.bulk_transfer :endpoint => @endpoints[:in][:addr], :dataIn => buf,
                                   :timeout => @timeout
       rescue LIBUSB::ERROR_TIMEOUT
         return 'ERROR TIMEOUT'

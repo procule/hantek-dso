@@ -20,17 +20,36 @@ module Hantek
         if Hantek::HAVE_SUBCMD.include? c
           sc = ('sc_'+data.unpack('H*').first.scan(/../)[3]+'_'+data.unpack('H*').first.scan(/../)[4]).to_sym
           puts "SUBCOMMAND: #{sc}"
-
+          res = nil
           if sc == :sc_82_00
             Hantek::SUBCOMMAND[sc].new.pre_read(data, client)
             d = ""
-            while 1
+            loop do
               nd = client.get_data
               d += nd unless nd.nil?
-              break if nd.size < client.endpoints[:in][:maxsize]
+              break if (!nd.nil?).size < client.endpoints[:in][:maxsize]
             end
-            Hantek::SampleDataPacketResponse.new.pre_read(d, client)
+            puts 'SAMPLEDATA'
+            res = Hantek::SampleDataPacketResponse.new.pre_read(d, client)
           end
+          if sc == :sc_a0_01
+            puts 'SCREENSHOT'
+            res = Hantek::SUBCOMMAND[sc].new.pre_read(data, client)
+            packet = res.data_in
+            loop do
+              resp = Hantek::SUBCOMMAND[sc].new
+              data = client.get_data(10214)
+              res = Hantek::SUBCOMMAND[sc].new.pre_read(data, client)
+              packet += res.data_in
+              puts 'DATA'
+              break if data.size < 10214
+            end
+            puts 'FIN LOOP DATA'
+            File.open('/tmp/now.img','wb') do |f|
+              f.write(packet)
+            end
+          end
+          res
         else
           if Hantek::COMMAND[c].method_defined? :pre_read
             puts 'WE HAVE PRE-READ'
@@ -48,6 +67,7 @@ module Hantek
     def result
 
     end
+
     def get_command
       @data_in.unpack('H*').first.scan(/../)[3].upcase
     end
@@ -60,7 +80,6 @@ module Hantek
       a
     end
 
-    # @param [Object] color
     def inspect(colorize=true, hexed=[])
       f = (get_fields false) - [:rest]
       i = { :type => self.class }
@@ -76,7 +95,7 @@ module Hantek
       i
     end
 
-    def add_param s
+    def add_param(s)
       @extra_attr ||= []
       @extra_attr << s
     end

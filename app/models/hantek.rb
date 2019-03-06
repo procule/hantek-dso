@@ -1,5 +1,6 @@
 require 'hantek/dso_request/system_time_request'
 require 'hantek/dso_request/sample_data_request'
+require 'hantek/dso_request/screenshot_request'
 require 'hantek/errors'
 require 'hantek/dso_response/unknown_response'
 require 'hantek/dso_response/lock_response'
@@ -9,6 +10,7 @@ require 'hantek/dso_response/sample_data_channel_response'
 require 'hantek/dso_response/sample_data_length_response'
 require 'hantek/dso_response/sample_data_packet_response'
 require 'hantek/dso_response/sample_data_error_response'
+require 'hantek/dso_response/screenshot_response'
 
 
 module Hantek
@@ -17,18 +19,21 @@ module Hantek
   IDVENDOR = 0x049f
   IDPRODUCT = 0x505a
 
-  HAVE_SUBCMD = [ :c_82 ]
+  HAVE_SUBCMD = [ :c_82, :c_a0 ]
 
   REQUESTS = [
       SampleDataRequest,
-      SystemTimeRequest
+      SystemTimeRequest,
+      ScreenshotRequest
   ].inject([]) {|i, a| i.append a.class_name}
 
   COMMAND = {
       :c_02 => SampleDataRequest,
+      :c_20 => ScreenshotRequest,
       :c_21 => SystemTimeRequest,
       :c_82 => SampleDataResponse,
       :c_92 => LockResponse,
+      :c_a0 => ScreenshotResponse,
       :c_a1 => SystemTimeResponse
 
   }
@@ -37,7 +42,8 @@ module Hantek
       :sc_82_00 => SampleDataLengthResponse,
       :sc_82_01 => SampleDataPacketResponse,
       :sc_82_02 => SampleDataChannelResponse,
-      :sc_82_03 => SampleDataErrorResponse
+      :sc_82_03 => SampleDataErrorResponse,
+      :sc_a0_01 => ScreenshotResponse
   }
 
   def self.testing

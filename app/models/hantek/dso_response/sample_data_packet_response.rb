@@ -26,11 +26,16 @@ module Hantek
 
     def result
       super
-      @data_in[6..@data_in.size-2].unpack('H*')[0].scan(/../).map {|b| b.hex}
+      @data_in[6..@data_in.size-2].unpack('H*')[0].scan(/../).map {|b| signed(b.hex)}
     end
 
     def chart_data
 
+    end
+
+    private
+    def signed b
+      (b&0x80).zero? ? b : b-0xff
     end
 
   end

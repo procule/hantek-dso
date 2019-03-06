@@ -22,8 +22,9 @@ class DsoController < ApplicationController
 
     if params[:packet_type]
       puts 'WE HAVE PACKET TYPE'
-      Object.const_get('Hantek::'+params[:packet_type]).new.send(@client)
-      @datastr = @client.read_packet
+      req = Object.const_get('Hantek::'+params[:packet_type]).new
+      req.send(@client)
+      @datastr = @client.read_packet(req.buffer_in)
     end
     if @datastr.instance_variable_defined? '@data'
       puts 'WE HAVE @DATA'

@@ -16,12 +16,17 @@ module Hantek
     end
 
     def send (client)
+      @client = client
       client.handle.bulk_transfer(:endpoint => client.endpoints[:out][:addr],
                             :dataOut => @packet.pack('c*'))
     end
 
     def command
       @packet.unpack('H*').first.scan(/../)[3]
+    end
+
+    def buffer_in
+      @client.endpoints[:in][:maxsize]
     end
 
     private

@@ -1,4 +1,7 @@
 - vfinish = 0
+%p
+  = render :partial => 'send_packet'
+
 - if @datastr.class.ancestors.inject(false) {|result, c| result || (Hantek::DSOResponse.to_s == c.to_s) }
   %p
     %h2 PACKET !
@@ -9,6 +12,12 @@
       = @datastr.class.ancestors[0].to_s
   %div
     %p.etiquette
+      Graphic
+    %div#chart_div
+      %script
+        loadCharts(#{@datastr.result});
+  %div
+    %p.etiquette
       Hex string
     %p.packet
       = @datastr.to_hex
@@ -16,12 +25,6 @@
     %p.etiquette
       Packet inspect
     = safe_html(ap @datastr.inspect)
-  %div
-    %p.etiquette
-      Graphic
-    %div#chart_div
-      %script
-        loadCharts(#{@datastr.result});
   %div
     %p.etiquette
       Result
@@ -46,10 +49,6 @@
       No packet in queue
 
 - vfinish = Time.now
-%br
-
-%p
-  = render :partial => 'send_packet'
 
 %p ----
 
